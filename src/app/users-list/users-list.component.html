@@ -1,0 +1,48 @@
+<app-nav-bar
+  (usersEvent)="usersEventHandler($event)"
+  (loadingEvent)="loadingEventHandler($event)"
+></app-nav-bar>
+<div class="container" style="margin-top: 80px;">
+  <ngx-spinner *ngIf="loading"></ngx-spinner>
+  <div class="row mb-2">
+    <div class="col-md-6" *ngFor="let user of users">
+      <div
+        class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative"
+      >
+        <div class="col-auto d-none d-lg-block">
+          <img
+            src="{{ user.avatar_url }}"
+            alt="{{ user.login }}"
+            style="max-height: 250px;"
+          />
+        </div>
+        <div class="col p-4 d-flex flex-column position-static">
+          <h3>{{ user.login }}</h3>
+          <a
+            [routerLink]="['/profile', user.login, user.id]"
+            class="stretched-link"
+          >
+            <h4 class="mb-2">View Profile</h4>
+          </a>
+          <a href="{{ user.html_url }}" target="_blank">
+            <h5>Go To GitHub Page</h5>
+          </a>
+          <button
+            class="btn btn-danger btn-sm"
+            *ngIf="isAddedToFav(user); else notadded"
+            (click)="removeFromFavorites(user)"
+          >
+            Remove From Favorites
+            <i class="fa fa-trash text-white"></i>
+          </button>
+          <ng-template #notadded>
+            <button (click)="addToFavorite(user)" class="btn btn-success">
+              Add To Favorite
+              <i class="fa fa-star text-warning"></i>
+            </button>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

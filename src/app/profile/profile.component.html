@@ -1,0 +1,126 @@
+<div class="container emp-profile">
+  <div class="row mb-5">
+    <a [routerLink]="['/']">
+      <button class="btn btn-light">
+        <i class="fa fa-arrow-left text-dark"></i>
+        Main Page
+      </button>
+    </a>
+  </div>
+  <form method="post">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="profile-img">
+          <img src="{{ user.avatar_url }}" alt="{{ user.name }} " />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="profile-head">
+          <h5>
+            {{ user.name }}
+          </h5>
+          <h6>
+            {{ user.bio }}
+          </h6>
+          <p class="proile-rating">
+            FOLLOWERS : <span>{{ user.followers }}</span>
+          </p>
+          <p class="proile-rating">
+            PUBLIC REPOSITORIES : <span>{{ user.public_repos }}</span>
+          </p>
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                id="home-tab"
+                data-toggle="tab"
+                role="tab"
+                aria-controls="home"
+                aria-selected="true"
+                >About</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <button
+          class="btn btn-danger"
+          (click)="removeFromFavorites(user)"
+          *ngIf="isAddedToFav(user); else notadded"
+        >
+          Remove From Favorites
+          <i class="fa fa-trash text-white"></i>
+        </button>
+        <ng-template #notadded>
+          <button (click)="addToFavorite(user)" class="btn btn-success">
+            Add To Favorite
+            <i class="fa fa-star text-warning"></i>
+          </button>
+        </ng-template>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="profile-work">
+          <p>WORK LINK</p>
+          <a *ngIf="user.blog" target="_blank" href="{{ user.blog }}"
+            >Personal Blog</a
+          ><br />
+          <a target="_blank" href="{{ user.html_url }}">GitHub Page</a><br />
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="tab-content profile-tab" id="myTabContent">
+          <div
+            class="tab-pane fade show active"
+            id="home"
+            role="tabpanel"
+            aria-labelledby="home-tab"
+          >
+            <div *ngIf="user.location" class="row">
+              <div class="col-md-6">
+                <label>Location</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{ user.location }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Name</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{ user.name }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Username</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{ user.login }}</p>
+              </div>
+            </div>
+            <div *ngIf="user.email" class="row">
+              <div class="col-md-6">
+                <label>Email</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{ user.email }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Member Since</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{ user.created_at }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
